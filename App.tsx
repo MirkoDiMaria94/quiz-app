@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
+import React, {FC, useState} from 'react';
+import {SafeAreaView, StatusBar} from 'react-native';
+
+import StartScreen from './screens/Start';
+import GameScreen from './screens/Play';
+
+const App: FC = () => {
+  const [isPlaying, setPlaying] = useState(false);
+
+  function startGame() {
+    setPlaying(true);
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <>
+      <StatusBar barStyle="light-content" />
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+      <SafeAreaView style={{backgroundColor: '#000'}}>
+        {!isPlaying ? <StartScreen startGame={startGame} /> : <GameScreen />}
+      </SafeAreaView>
+    </>
+  );
+};
+
+export default App;
